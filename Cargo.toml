@@ -37,7 +37,7 @@ license = "MIT"
 repository = "https://github.com/AlulaOneshot/uacpi-bindings"
 
 [lib]
-name = "uacpi_bindings"
+name = "nyaux_uacpi_bindings"
 path = "src/lib.rs"
 
 [build-dependencies.bindgen]
