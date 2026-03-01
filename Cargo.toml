@@ -41,7 +41,7 @@ name = "nyaux_uacpi_bindings"
 path = "src/lib.rs"
 
 [build-dependencies.bindgen]
-version = "0.72.1"
+version = "*"
 
 [build-dependencies.cc]
-version = "1.2.37"
+version = "*"
