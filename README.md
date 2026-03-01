@@ -1,2 +1,2 @@
-# don't ever user this outside of Nyaux
+# don't ever use this outside of Nyaux
 unless you like pain :)
