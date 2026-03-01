@@ -11,8 +11,8 @@
 
 [package]
 edition = "2024"
-name = "uacpi-bindings"
-version = "0.1.2"
+name = "nyaux_uacpi_bindings"
+version = "0.0.1"
 build = "build.rs"
 links = "uacpi"
 autolib = false
