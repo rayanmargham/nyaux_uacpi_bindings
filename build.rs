@@ -60,19 +60,22 @@ fn main() -> Result<(), Box<dyn Error>> {
         .include(format!("{uacpi_path_str}/include"))
         .define("UACPI_SIZED_FREES", "1")
         .flag("-fno-stack-protector")
-        .flag("-mgeneral-regs-only")
         .flag("-mcmodel=large")
         .flag("-nostdlib")
         .flag("-ffreestanding");
 
-    if cfg!(target_arch = "x86_64") || cfg!(target_arch = "x86") {
+
+    let target_arch = env::var("CARGO_CFG_TARGET_ARCH").unwrap_or_default();
+
+    if matches!(target_arch.as_str(), "x86_64" | "x86") {
         cc.flag("-mno-red-zone");
     }
-
     if cfg!(feature = "reduced-hardware") {
         cc.define("UACPI_REDUCED_HARDWARE", "1");
     }
-
+    if matches!(target_arch.as_str(), "x86_64" | "x86" | "aarch64" | "arm") {
+        cc.flag("-mgeneral-regs-only");
+    }
     cc.compile("uacpi");
 
     let bindings = bindgen::Builder::default()
