@@ -79,6 +79,16 @@ fn main() -> Result<(), Box<dyn Error>> {
     cc.compile("uacpi");
 
     let target = env::var("TARGET").unwrap();
+    let clang_resource_dir = String::from_utf8(
+        Command::new("clang")
+            .arg("-print-resource-dir")
+            .output()
+            .expect("Failed to run clang -print-resource-dir")
+            .stdout,
+    )
+    .unwrap();
+    let clang_include = format!("-isystem{}/include", clang_resource_dir.trim());
+
     let bindings = bindgen::Builder::default()
         .header("wrapper.h")
         .parse_callbacks(Box::new(bindgen::CargoCallbacks::new()))
@@ -88,6 +98,8 @@ fn main() -> Result<(), Box<dyn Error>> {
             #[cfg(feature = "reduced-hardware")]
             "-DUACPI_REDUCED_HARDWARE=1",
             "-ffreestanding",
+            "-nostdinc",
+            &clang_include,
         ])
         .clang_arg(format!("--target={}", target))
         .prepend_enum_name(false)
