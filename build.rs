@@ -78,6 +78,7 @@ fn main() -> Result<(), Box<dyn Error>> {
     }
     cc.compile("uacpi");
 
+    let target = env::var("TARGET").unwrap();
     let bindings = bindgen::Builder::default()
         .header("wrapper.h")
         .parse_callbacks(Box::new(bindgen::CargoCallbacks::new()))
@@ -88,6 +89,7 @@ fn main() -> Result<(), Box<dyn Error>> {
             "-DUACPI_REDUCED_HARDWARE=1",
             "-ffreestanding",
         ])
+        .clang_arg(format!("--target={}", target))
         .prepend_enum_name(false)
         .use_core()
         .generate()
