@@ -102,6 +102,7 @@ fn main() -> Result<(), Box<dyn Error>> {
             &clang_include,
         ])
         .clang_arg(format!("--target={}", target))
+        .detect_include_paths(false)
         .prepend_enum_name(false)
         .use_core()
         .generate()
