@@ -98,7 +98,6 @@ fn main() -> Result<(), Box<dyn Error>> {
             #[cfg(feature = "reduced-hardware")]
             "-DUACPI_REDUCED_HARDWARE=1",
             "-ffreestanding",
-            "-nostdinc",
             &clang_include,
         ])
         .clang_arg(format!("--target={}", target))
